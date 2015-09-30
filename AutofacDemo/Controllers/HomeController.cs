@@ -1,13 +1,19 @@
-﻿using System;
+﻿using AutofacDemo.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace AutofacDemo.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly INameResolver _nameResolver;
+        public HomeController(INameResolver nameResolver)
+        {
+            _nameResolver = nameResolver;
+        }
+
         public ActionResult Index()
         {
             return View();
@@ -15,7 +21,7 @@ namespace AutofacDemo.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = _nameResolver.GetName("Ollie");
 
             return View();
         }
